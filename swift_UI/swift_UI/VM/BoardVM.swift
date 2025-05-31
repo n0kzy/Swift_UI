@@ -1,0 +1,18 @@
+//
+//  BoardVM.swift
+//  swift_UI
+//
+//  Created by etudiant on 26/05/2025.
+//
+
+import SwiftUI
+import Connect4Core
+
+class BoardVM: ObservableObject {
+    @Published var board : Board
+    
+    init(board: Board) {
+        self.board = board
+    }
+
+}

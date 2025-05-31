@@ -6,43 +6,40 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct partyScreen: View {
-    let options = ["Classique", "Option 2", "Option 3", "Option 4"]
+    let options = ["Classique", "Tic Tac Toe", "Morpion"]
     @State private var selectedItem = "Classique"
-    let rows = 6
-    let columns = 7
+    @Binding var avatarImage: Image
+    @Binding var avatarImage2: Image
+    @Binding var game : GameViewModel
+    //@Binding var timer : Timer
+    //@State var selectedVal : String = game.game.type
+
+    var scene : SKScene {
+        let scene = GameScene()
+        scene.size = CGSize(width:300 , height: 400)
+        scene.scaleMode = .fill
+        return scene
+    }
     var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [.bg, .bg2]),
-                           startPoint: .top,
-                           endPoint: .bottom).ignoresSafeArea()
+        StyleView {
             ScrollView {
+                SpriteView(scene: scene)
                 VStack{
                     HStack{
-                        Image("connect")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                        VStack {Text("joueur 1")
-                            Text("Human").font(.subheadline)
-                        }
-                        VStack {Text("joueur 2")
-                            Text("IA").font(.subheadline)
-                        }
-                        Image("connect")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
+                        PlayerView(image:avatarImage, playerName: "CodeLord", playerType: "Humain",color: .yellow)
+
+                        PlayerView(image:avatarImage2, playerName: "Neptune", playerType: "IA",color: .red)
+
                         
                     }
                     //VGrid LazyGrid
                     VStack(spacing: 5) {
-                        ForEach(0..<rows, id: \.self) { row in
+                        ForEach(0..<game.game.board.nbRows, id: \.self) { row in
                             HStack(spacing: 5) {
-                                ForEach(0..<columns, id: \.self) { col in
+                                ForEach(0..<game.game.board.nbColumns , id: \.self) { col in
                                     Button(action: {
                                         
                                     }) {
@@ -69,19 +66,18 @@ struct partyScreen: View {
                     Image(systemName: "pause.fill")
                 }
                 VStack{
-                    HStack{
-                        Text("Règles du jeu : ")
-                        Picker("choix", selection: $selectedItem){
-                            ForEach(options, id: \.self) { option in
-                                Text(option)
-                            }
-                        }
-                    }
+                    CustomPicker(selectedItem: $selectedItem, options: options, text: "Règles")
+                    Text("\(game.game.editableData.type)")
                 }
             }
         }.foregroundStyle(.main).font(.custom("Short Baby", size: 16, relativeTo: .body))
     }
 }
+/*
 #Preview {
-    partyScreen()
+    @State var avatarImage: Image = Image("connect")
+    @State var avatarImage2: Image = Image("connect")
+    partyScreen(avatarImage: $avatarImage, avatarImage2: $avatarImage2, game: <#Binding<GameViewModel>#>)
 }
+ */
+

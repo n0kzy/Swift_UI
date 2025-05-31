@@ -1,64 +1,53 @@
 import SwiftUI
+import Connect4Core
 
-let data1 = [
-    ("20/01/2024", "didier vs bertrant", "Classiques"),
-    ("20/01/2024", "louis vs bertrant", "Classiques"),
-    ("20/01/2024", "didier vs louis", "Classiques"),
-    ("20/01/2024", "didier vs bertrant", "Classiques"),
-    ("20/01/2024", "louis vs bertrant", "Classiques"),
-    ("20/01/2024", "didier vs louis", "Classiques"),
-    ("20/01/2024", "didier vs bertrant", "Classiques"),
-    ("20/01/2024", "louis vs bertrant", "Classiques"),
-    ("20/01/2024", "didier vs louis", "Classiques"),
-    ("20/01/2024", "didier vs bertrant", "Classiques"),
-    ("20/01/2024", "louis vs bertrant", "Classiques"),
-
-]
 
 let sections = [("en cours", 1), ("terminées", 0)]
 
 struct Historique: View {
+    @ObservedObject var data : GamesVM
     var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [.bg, .bg2]),
-                           startPoint: .top,
-                           endPoint: .bottom).ignoresSafeArea()
+        StyleView{
         ScrollView{
-            Text("Parties Enregistrées")
-                .font(Font.custom("Short Baby", size: 32))
-                .padding()
-            
-                .ignoresSafeArea()
+            Text("Parties Enregistrées").font(Font.custom("Short Baby", size: 32))
                 VStack {
                     ForEach(sections, id: \.0) { section in
-                        VStack() {
-                            Text(section.0)
-                                .font(.headline)
-                                .padding(.top,40)
-                            HStack {
-                                Text("Date").underline().padding()
-                                Text("Joueurs").underline().padding()
-                                Text("Règles").underline().padding()
-                            }.padding()
-                            ForEach(data1, id: \.1) { item in
-                                    HStack {
-                                        Text(item.0)
-                                        Text(item.1)
-                                        Text(item.2)
-                                    }
-                            }
+                        ForEach(data.games) { gameVM in
+                            CustomStats(
+                                titles: ("Date", "Joueurs", "Règles"),
+                                matches: [(
+                                    DateFormatter.localizedString(
+                                        from: Date(),
+                                        dateStyle: .short,
+                                        timeStyle: .none
+                                    ),
+                                    gameVM.name,
+                                    gameVM.type
+                                )]
+                            )
+                            .padding()
                         }
+                    }
+
                     }
                 }
             }
-        }.foregroundStyle(.main).font(.custom("Short Baby", size: 16, relativeTo: .body))
-
-    }
+        }
 }
 
 #Preview {
-    Historique()
-        .preferredColorScheme(.dark) // ou .light
+    do {
+        let player1 = Player(withName: "toto", andId: Owner.player1)!
+        let player2 = Player(withName: "tata", andId: Owner.player2)!
+        let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
+        let coreGame = try! Connect4Core.Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
 
+        let gamesVM = GamesVM(with: [coreGame])
+        
+        return Historique(data: gamesVM)
+            .preferredColorScheme(.dark)
+    } catch {
+        return Text("Erreur dans le preview : \(error.localizedDescription)")
+    }
 }
 

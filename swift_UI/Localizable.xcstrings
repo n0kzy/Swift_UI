@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "en cours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "running"
+          }
+        }
+      }
+    },
     "JOUER" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8,6 +19,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PLAY"
+          }
+        }
+      }
+    },
+    "JOUEUR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PLAYER"
           }
         }
       }
@@ -23,6 +45,17 @@
         }
       }
     },
+    "Parties Enregistrées" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved Games"
+          }
+        }
+      }
+    },
     "Puissance 4" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -34,6 +67,17 @@
         }
       }
     },
+    "Règles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules"
+          }
+        }
+      }
+    },
     "RESULTATS" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -41,6 +85,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "RESULTS"
+          }
+        }
+      }
+    },
+    "terminées" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "finished"
           }
         }
       }

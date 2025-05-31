@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC4362962DDDBB260000F159 /* C4Rules.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362922DDDBB260000F159 /* C4Rules.xcframework */; };
+		EC4362972DDDBB260000F159 /* C4Rules.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362922DDDBB260000F159 /* C4Rules.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EC4362982DDDBB260000F159 /* C4.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362932DDDBB260000F159 /* C4.xcframework */; };
+		EC4362992DDDBB260000F159 /* C4.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362932DDDBB260000F159 /* C4.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EC43629A2DDDBB260000F159 /* C4Players.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362942DDDBB260000F159 /* C4Players.xcframework */; };
+		EC43629B2DDDBB260000F159 /* C4Players.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362942DDDBB260000F159 /* C4Players.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EC43629C2DDDBB260000F159 /* C4Persistance.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362952DDDBB260000F159 /* C4Persistance.xcframework */; };
+		EC43629D2DDDBB260000F159 /* C4Persistance.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362952DDDBB260000F159 /* C4Persistance.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EC4362D02DDF105E0000F159 /* Extensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362CF2DDF105E0000F159 /* Extensions.framework */; };
+		EC4362D12DDF105E0000F159 /* Extensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362CF2DDF105E0000F159 /* Extensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC956D432DD47004006B7F69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EC956D422DD47004006B7F69 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +37,34 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EC43629E2DDDBB260000F159 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EC43629D2DDDBB260000F159 /* C4Persistance.xcframework in Embed Frameworks */,
+				EC4362992DDDBB260000F159 /* C4.xcframework in Embed Frameworks */,
+				EC43629B2DDDBB260000F159 /* C4Players.xcframework in Embed Frameworks */,
+				EC4362972DDDBB260000F159 /* C4Rules.xcframework in Embed Frameworks */,
+				EC4362D12DDF105E0000F159 /* Extensions.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		EC4362852DDDBA470000F159 /* C4Players.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Players.xcframework; path = ../../Connect4_SwiftUI/xcframeworks/C4Players.xcframework; sourceTree = "<group>"; };
+		EC4362862DDDBA470000F159 /* C4Persistance.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Persistance.xcframework; path = ../../Connect4_SwiftUI/xcframeworks/C4Persistance.xcframework; sourceTree = "<group>"; };
+		EC4362872DDDBA470000F159 /* C4.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4.xcframework; path = ../../Connect4_SwiftUI/xcframeworks/C4.xcframework; sourceTree = "<group>"; };
+		EC4362882DDDBA470000F159 /* C4Rules.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Rules.xcframework; path = ../../Connect4_SwiftUI/xcframeworks/C4Rules.xcframework; sourceTree = "<group>"; };
+		EC4362922DDDBB260000F159 /* C4Rules.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Rules.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4Rules.xcframework; sourceTree = "<group>"; };
+		EC4362932DDDBB260000F159 /* C4.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4.xcframework; sourceTree = "<group>"; };
+		EC4362942DDDBB260000F159 /* C4Players.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Players.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4Players.xcframework; sourceTree = "<group>"; };
+		EC4362952DDDBB260000F159 /* C4Persistance.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Persistance.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4Persistance.xcframework; sourceTree = "<group>"; };
+		EC4362CF2DDF105E0000F159 /* Extensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Extensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D142DD46E42006B7F69 /* swift_UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swift_UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D252DD46E43006B7F69 /* swift_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swift_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D2F2DD46E43006B7F69 /* swift_UIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swift_UIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +72,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		EC4362322DDB07260000F159 /* font */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = font;
+			sourceTree = "<group>";
+		};
 		EC956D162DD46E42006B7F69 /* swift_UI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = swift_UI;
@@ -57,6 +99,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC43629C2DDDBB260000F159 /* C4Persistance.xcframework in Frameworks */,
+				EC4362982DDDBB260000F159 /* C4.xcframework in Frameworks */,
+				EC43629A2DDDBB260000F159 /* C4Players.xcframework in Frameworks */,
+				EC4362962DDDBB260000F159 /* C4Rules.xcframework in Frameworks */,
+				EC4362D02DDF105E0000F159 /* Extensions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,13 +124,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC4362842DDDBA470000F159 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC4362CF2DDF105E0000F159 /* Extensions.framework */,
+				EC4362932DDDBB260000F159 /* C4.xcframework */,
+				EC4362952DDDBB260000F159 /* C4Persistance.xcframework */,
+				EC4362942DDDBB260000F159 /* C4Players.xcframework */,
+				EC4362922DDDBB260000F159 /* C4Rules.xcframework */,
+				EC4362872DDDBA470000F159 /* C4.xcframework */,
+				EC4362862DDDBA470000F159 /* C4Persistance.xcframework */,
+				EC4362852DDDBA470000F159 /* C4Players.xcframework */,
+				EC4362882DDDBA470000F159 /* C4Rules.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EC956D0B2DD46E42006B7F69 = {
 			isa = PBXGroup;
 			children = (
+				EC4362322DDB07260000F159 /* font */,
 				EC956D422DD47004006B7F69 /* Localizable.xcstrings */,
 				EC956D162DD46E42006B7F69 /* swift_UI */,
 				EC956D282DD46E43006B7F69 /* swift_UITests */,
 				EC956D322DD46E43006B7F69 /* swift_UIUITests */,
+				EC4362842DDDBA470000F159 /* Frameworks */,
 				EC956D152DD46E42006B7F69 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,12 +173,14 @@
 				EC956D102DD46E42006B7F69 /* Sources */,
 				EC956D112DD46E42006B7F69 /* Frameworks */,
 				EC956D122DD46E42006B7F69 /* Resources */,
+				EC43629E2DDDBB260000F159 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				EC4362322DDB07260000F159 /* font */,
 				EC956D162DD46E42006B7F69 /* swift_UI */,
 			);
 			name = swift_UI;
@@ -403,6 +470,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"swift_UI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "swift-UI-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -440,6 +508,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"swift_UI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "swift-UI-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

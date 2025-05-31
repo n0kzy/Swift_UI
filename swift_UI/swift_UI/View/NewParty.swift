@@ -7,98 +7,64 @@
 
 import SwiftUI
 import PhotosUI
-
+import Connect4Core
 
 struct NewParty: View {
     @State private var selectedItem = "Classique"
+    @State private var selectedType = "Player"
     @State private var lignes = 6
     @State private var jetons = 4
     @State private var colonnes = 7
     @State private var secondesInput: String = "0"
     @State private var minutesInput: String = "1"
-    @State private var timer: Timer? = nil
-    @State private var imageSelection: PhotosPickerItem? = nil
     @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImage: Image? = Image("connect")
+    @State var avatarImage: Image = Image("image_profile")
     @State private var avatarItem2: PhotosPickerItem?
-    @State private var avatarImage2: Image? = Image("connect")
+    @State var avatarImage2: Image = Image("image_profile")
     @State private var naviguer:Bool = false
+    
+    @State var gameToLaunch: GameViewModel
+    
+    @ObservedObject var joueur: PlayerVM = PlayerVM(player: Player(withName: "toto", andId: Owner.player1)!)
+    @ObservedObject var joueur2: PlayerVM = PlayerVM(player: Player(withName: "toto2", andId: Owner.player2)!)
+    
     // Liste des options
-    let options = ["Classique", "Option 2", "Option 3", "Option 4"]
+    let options = ["Classique", "Tic Tac Toe", "Morpion"]
+    let typePlayer = ["Player","IA"]
     var body: some View {
-        
-        NavigationStack {
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [.bg, .bg2]),
-                               startPoint: .top,
-                               endPoint: .bottom).ignoresSafeArea()
-                ScrollView {
-                    VStack {
-                        Text("NOUVELLE PARTIE").font(Font.custom("Short Baby",size:32)).padding()
+        StyleView{
+            ScrollView {
+                VStack {
+                    Text("NOUVELLE PARTIE").font(Font.custom("Short Baby",size:32)).padding()
+                    
+                    HStack {
+                        PlayerAvatarEditor(
+                            playerLabel: "JOUEUR 1",
+                            playerName: joueur.player.name,
+                            avatarItem: $avatarItem,
+                            avatarImage: $avatarImage
+                        )
+                        Spacer()
                         
-                        HStack {
-                            VStack {
-                                Text("JOUEUR 1")
-                                Text("toto1")
-                                
-                                avatarImage?
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Rectangle())
-                                    .onChange(of: avatarItem) {
-                                        Task {
-                                            if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
-                                                avatarImage = loaded
-                                            } else {
-                                                print("Failed")
-                                            }
-                                        }
-                                    }
-                                PhotosPicker("modifier", selection: $avatarItem, matching: .images)
-                                
-                            }
-                            Spacer()
-                            VStack {
-                                Text("JOUEUR 2")
-                                Text("toto2")
-                                
-                                avatarImage2?
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Rectangle())
-                                    .onChange(of: avatarItem2) {
-                                        Task {
-                                            if let loaded = try? await avatarItem2?.loadTransferable(type: Image.self) {
-                                                avatarImage2 = loaded
-                                            } else {
-                                                print("Failed")
-                                            }
-                                        }
-                                    }
-                                PhotosPicker("modifier", selection: $avatarItem2, matching: .images)
-                                
-                            }
+                        VStack {
+                            PlayerAvatarEditor(
+                                playerLabel: "JOUEUR 2",
+                                playerName: joueur2.player.name,
+                                avatarItem: $avatarItem2,
+                                avatarImage: $avatarImage2
+                            )
+                            CustomPicker(selectedItem: $selectedType, options: typePlayer, text: "joueur")
                         }
+                        
                         
                     }.frame(maxWidth:.infinity).padding(.horizontal,50)
                     Divider()
-                    HStack {
-                        Text("Règles du jeu")
-                        Picker("Choisissez une option", selection: $selectedItem) {
-                            // Créer une option pour chaque élément de la liste
-                            ForEach(options, id: \.self) { option in
-                                Text(option)
-                            }
-                        }
-                    }
+                    CustomPicker(selectedItem: $selectedItem, options: options, text: "Règles")
                     Grid(alignment: .leading, horizontalSpacing: 15, verticalSpacing: 10) {
                         
                         GridRow {
                             Text("Dimensions :")
                                 .gridCellAnchor(.topLeading)
-                            // cellule vide pour l'alignement
                             EmptyView()
                         }
                         ForEach([("Lignes", $lignes), ("Colonnes", $colonnes), ("Jetons", $jetons)], id: \.0) { name, value in
@@ -127,22 +93,38 @@ struct NewParty: View {
                         
                         Text("sec")
                     }
-                    Button(action: {
-                        naviguer = true
-                    }) {
-                        Text("JOUER")
-                            .padding()
-                            .foregroundColor(.blue)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.main, lineWidth: 2)
-                            )
-                    }
-                    NavigationLink("", destination: partyScreen(),isActive: $naviguer).hidden()
-                }.frame(maxWidth:.infinity, maxHeight: .infinity, alignment: .top)
-            }.foregroundStyle(.main).font(.custom("Short Baby", size: 16, relativeTo: .body))
-        }}
-}
+                    CustomButton(text: "JOUER", execute:createGame, destination: {
+                        
+                        partyScreen(avatarImage: $avatarImage, avatarImage2: $avatarImage2, game:$gameToLaunch)
+                        
+                    })
+                }
+            }
+        }
+    }
+        func createGame() {
+            do {
+                //if(selectedItem == "Tic Tac Toe"){
+                    let rules = Connect4Rules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)!
+                //}
+                    let coreGame = try? Connect4Core.Game(withRules: rules, andPlayer1: joueur.player, andPlayer2: joueur2.player)
+                gameToLaunch = GameViewModel(game: coreGame!)
+            }
+        }
+    }
+
+    
 #Preview {
-    NewParty()
+    let player1 = Player(withName: "toto", andId: Owner.player1)!
+    let player2 = Player(withName: "tata", andId: Owner.player2)!
+    let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
+    let coreGame = try! Connect4Core.Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
+    
+    let viewModel = GameViewModel(game: coreGame)
+    
+    let joueurVM = PlayerVM(player: player1)
+    
+    return NewParty(gameToLaunch: viewModel, joueur: joueurVM)
+        .preferredColorScheme(.dark)
 }
+
