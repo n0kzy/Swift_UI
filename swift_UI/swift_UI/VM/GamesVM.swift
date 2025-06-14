@@ -7,40 +7,38 @@
 
 import SwiftUI
 import Connect4Core
+import Connect4Persistance
 
 class GamesVM: ObservableObject {
     let id = UUID()
     @Published var games : [GameViewModel]
-    private var gamesData: [Game.Data] = []
-
 
     init(with games: [Game]) {
         self.games = games.map { GameViewModel(game: $0) }
     }
 
     
-    func save() {
-        gamesData = games.map { $0.editableData }
+    func save() async {
 
         do {
-            let json = URL.documentsDirectory.appending(path:"Games.json")
-            let gamesData = try JSONEncoder().encode(gamesData)
-            try gamesData.write(to: json)
+            for game in games {
+                var g = try await Persistance.saveGame(withName:"games.json", andGame: game.game,withFolderName: "game")
+                //try await Persistance.addPlayer(withName: "players.json", andPlayer: game.game.players, withFolderName: "player")
+            }
         }
         catch {
             print(error.localizedDescription)
         }
     }
-    func load() {
-        let json = URL.documentsDirectory.appending(path:"Games.json")
-        if FileManager().fileExists(atPath: json.path) {
+    func load() async {
             do {
-                let data = try Data(contentsOf: json)
-                gamesData = try JSONDecoder().decode([Game.Data].self, from:data)
+                var game = try await Persistance.loadGame(withName:"games.json")
+                games.append(GameViewModel(game: game!))
+                var t = try await Persistance.getPlayers(withName: "games.json", withFolderName: "game")
+
             } catch {
                 print(error.localizedDescription)
             }
-        }
     }
                           
     func update(with gameVM: GameViewModel) {

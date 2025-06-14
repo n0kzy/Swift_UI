@@ -1,6 +1,44 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%@" : {
+
+    },
+    "%lld - %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld - %2$lld"
+          }
+        }
+      }
+    },
+    "%lld nul%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld nul%2$@"
+          }
+        }
+      }
+    },
+    "0" : {
+
+    },
+    "Choisir joueur 1" : {
+
+    },
+    "choix" : {
+
+    },
+    "Dimensions :" : {
+
+    },
     "en cours" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11,6 +49,12 @@
           }
         }
       }
+    },
+    "Face a Face" : {
+
+    },
+    "Home" : {
+
     },
     "JOUER" : {
       "extractionState" : "manual",
@@ -33,6 +77,18 @@
           }
         }
       }
+    },
+    "limite de temps:" : {
+
+    },
+    "min" : {
+
+    },
+    "Modifier" : {
+
+    },
+    "name" : {
+
     },
     "NOUVELLE PARTIE" : {
       "extractionState" : "manual",
@@ -88,6 +144,9 @@
           }
         }
       }
+    },
+    "sec" : {
+
     },
     "terminées" : {
       "extractionState" : "manual",

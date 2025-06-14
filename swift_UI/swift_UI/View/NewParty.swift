@@ -17,17 +17,13 @@ struct NewParty: View {
     @State private var colonnes = 7
     @State private var secondesInput: String = "0"
     @State private var minutesInput: String = "1"
-    @State private var avatarItem: PhotosPickerItem?
-    @State var avatarImage: Image = Image("image_profile")
-    @State private var avatarItem2: PhotosPickerItem?
-    @State var avatarImage2: Image = Image("image_profile")
     @State private var naviguer:Bool = false
-    
+    @State private var player1 = TempPlayerData()
+    @State private var player2 = TempPlayerData(label:"Joueur 2")
     @State var gameToLaunch: GameViewModel
     
-    @ObservedObject var joueur: PlayerVM = PlayerVM(player: Player(withName: "toto", andId: Owner.player1)!)
-    @ObservedObject var joueur2: PlayerVM = PlayerVM(player: Player(withName: "toto2", andId: Owner.player2)!)
-    
+    @StateObject var games = GamesVM(with: [])
+    @StateObject var pers : PersistanceVM
     // Liste des options
     let options = ["Classique", "Tic Tac Toe", "Morpion"]
     let typePlayer = ["Player","IA"]
@@ -39,21 +35,24 @@ struct NewParty: View {
                     
                     HStack {
                         PlayerAvatarEditor(
-                            playerLabel: "JOUEUR 1",
-                            playerName: joueur.player.name,
-                            avatarItem: $avatarItem,
-                            avatarImage: $avatarImage
+                            player:$player1
                         )
+                        Picker("Choisir joueur 1", selection: $player1.name) {
+                              ForEach(pers.players.map { $0.player.name }, id: \.self) { name in
+                                  Text(name).tag(name)
+                              }
+                          }
+                          .pickerStyle(MenuPickerStyle())
                         Spacer()
                         
                         VStack {
                             PlayerAvatarEditor(
-                                playerLabel: "JOUEUR 2",
-                                playerName: joueur2.player.name,
-                                avatarItem: $avatarItem2,
-                                avatarImage: $avatarImage2
+                                player:$player2
+
                             )
+                            
                             CustomPicker(selectedItem: $selectedType, options: typePlayer, text: "joueur")
+                            
                         }
                         
                         
@@ -93,38 +92,73 @@ struct NewParty: View {
                         
                         Text("sec")
                     }
-                    CustomButton(text: "JOUER", execute:createGame, destination: {
+                    CustomButton(text: "JOUER", execute:{
+                        Task {
+                            await createGame()
+                        }
+                    }, destination: {
                         
-                        partyScreen(avatarImage: $avatarImage, avatarImage2: $avatarImage2, game:$gameToLaunch)
+                        partyScreen(avatarImage: $player1.avatarImage, avatarImage2: $player2.avatarImage, game:$gameToLaunch,games: games, pers: pers)
                         
                     })
                 }
+
+            }
+        } .task {
+            await pers.loadPlayer()
+            if let first = pers.players.first {
+                player1.name = first.player.name
+            }
+            if let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                print("Documents directory: \(documents.path)")
             }
         }
     }
-        func createGame() {
+    func createGame () async {
             do {
+                    await pers.loadPlayer()
+                print("pass pas")
+                print(pers.players.count)
+                if let firstPlayer = pers.players.first {
+                    print("pass")
+                    player1.name = firstPlayer.player.name
+                }
+                guard let p1 = Player(withName: player1.name, andId: Owner.player1),
+                      let p2 = Player(withName: player2.name, andId: Owner.player2) else {
+                    print("Erreur de création des joueurs")
+                    return
+                }
+
+                let joueur1 = PlayerVM(player: p1, image: player1.avatarImage)
+                let joueur2 = PlayerVM(player: p2, image: player2.avatarImage)
+
                 //if(selectedItem == "Tic Tac Toe"){
                     let rules = Connect4Rules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)!
                 //}
-                    let coreGame = try? Connect4Core.Game(withRules: rules, andPlayer1: joueur.player, andPlayer2: joueur2.player)
+                    let coreGame = try? Connect4Core.Game(withRules: rules, andPlayer1: joueur1.player, andPlayer2: joueur2.player)
                 gameToLaunch = GameViewModel(game: coreGame!)
+
             }
         }
     }
 
     
 #Preview {
-    let player1 = Player(withName: "toto", andId: Owner.player1)!
+    //let pers = PersistanceVM(games: [], players: [])
+    let player1 = Player(withName: "test", andId: Owner.player1)!
     let player2 = Player(withName: "tata", andId: Owner.player2)!
     let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
     let coreGame = try! Connect4Core.Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
-    
+
+    let pers = PersistanceVM(games: [], players: [])
+    Task {
+        await pers.loadPlayer()
+    }
     let viewModel = GameViewModel(game: coreGame)
     
-    let joueurVM = PlayerVM(player: player1)
     
-    return NewParty(gameToLaunch: viewModel, joueur: joueurVM)
+    return NewParty(gameToLaunch: viewModel,pers:pers)
+    //permet de partager un objet ObservableObject à travers toute la hiérarchie des vues, sans avoir à le passer explicitement en paramètre à chaque vue
         .preferredColorScheme(.dark)
 }
 

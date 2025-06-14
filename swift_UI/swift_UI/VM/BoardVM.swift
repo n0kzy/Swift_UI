@@ -14,5 +14,13 @@ class BoardVM: ObservableObject {
     init(board: Board) {
         self.board = board
     }
+    
+    
+    /*
+    func playMove(col:Int) -> Int {
+        let res = board.insert(piece: Piece(withOwner: .player1), atColumn: col)
+        return res
+    }
+     */
 
 }

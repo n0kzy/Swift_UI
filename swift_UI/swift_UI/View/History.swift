@@ -12,7 +12,9 @@ struct Historique: View {
             Text("Parties Enregistrées").font(Font.custom("Short Baby", size: 32))
                 VStack {
                     ForEach(sections, id: \.0) { section in
+                        Text("\(section.0)").font(Font.custom("Short Baby", size: 24)).padding()
                         ForEach(data.games) { gameVM in
+
                             CustomStats(
                                 titles: ("Date", "Joueurs", "Règles"),
                                 matches: [(

@@ -9,32 +9,35 @@ import SwiftUI
 import PhotosUI
 
 struct PlayerAvatarEditor: View {
-    let playerLabel: String
-    let playerName: String
+    //let playerLabel: String
+    //var playerName: String
 
-    @Binding var avatarItem: PhotosPickerItem?
-    @Binding var avatarImage: Image
+    //@Binding var avatarItem: PhotosPickerItem?
+    //@Binding var avatarImage: Image
+    
+    @Binding var player : TempPlayerData
 
     var body: some View {
         VStack {
-            Text(playerLabel)
+            Text(player.label)
                 .font(.caption)
                 .foregroundColor(.gray)
-            Text(playerName)
+            TextField("name",text: $player.name)
+                .multilineTextAlignment(.center)
                 .font(.headline)
 
-            avatarImage
+            player.avatarImage
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)
                 .clipShape(Circle())
 
-            PhotosPicker("Modifier", selection: $avatarItem, matching: .images)
+            PhotosPicker("Modifier", selection: $player.avatarItem, matching: .images)
         }
-        .onChange(of: avatarItem) { _ in
+        .onChange(of: player.avatarItem) { _ in
             Task {
-                if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
-                    avatarImage = loaded
+                if let loaded = try? await player.avatarItem?.loadTransferable(type: Image.self) {
+                    player.avatarImage = loaded
                 } else {
                     print("Échec du chargement de l'image.")
                 }

@@ -9,11 +9,17 @@ import SwiftUI
 import Connect4Core
 
 
-class PlayerVM : ObservableObject,Identifiable {
-    @Published var player : Player
+class PlayerVM : ObservableObject,Identifiable,Equatable {
+    static func == (lhs: PlayerVM, rhs: PlayerVM) -> Bool {
+        lhs.player.id == rhs.player.id
+    }
     
-    init(player: Player) {
+    @Published var player : Player
+    @Published var image:Image?
+    
+    init(player: Player,image:Image) {
         self.player = player
+        self.image = image
     }
     
         
