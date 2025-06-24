@@ -38,6 +38,9 @@
         }
       }
     },
+    "Chargement de la scène…" : {
+
+    },
     "Choisir joueur 1" : {
       "localizations" : {
         "en" : {
@@ -252,6 +255,9 @@
           }
         }
       }
+    },
+    "Rejouer" : {
+
     },
     "RESULTATS" : {
       "extractionState" : "manual",

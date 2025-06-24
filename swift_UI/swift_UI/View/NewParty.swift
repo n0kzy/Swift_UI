@@ -21,9 +21,6 @@ struct NewParty: View {
     @State private var player1 = TempPlayerData()
     @State private var player2 = TempPlayerData(label:"Joueur 2")
     @State var gameToLaunch = GameViewModel()
-    
-    //
-    @ObservedObject var pers : PersistanceVM
     //@ObservedObject var persistanceVM: PersistanceVM
     
     // Liste des options
@@ -34,11 +31,13 @@ struct NewParty: View {
             ScrollView {
                 VStack {
                     Text("NOUVELLE PARTIE").font(Font.custom("Short Baby",size:32)).padding()
+                    
+                    
                     HStack {
                         VStack {
                             PlayerAvatarEditor(
                                 player:$player1,
-                                pers:pers
+                                pers:PersistanceVM.shared
                             )
                             
                             .pickerStyle(MenuPickerStyle())
@@ -49,7 +48,7 @@ struct NewParty: View {
                         VStack {
                             PlayerAvatarEditor(
                                 player:$player2,
-                                pers:pers
+                                pers:PersistanceVM.shared
                                 
                             )
                             .pickerStyle(MenuPickerStyle())
@@ -109,16 +108,16 @@ struct NewParty: View {
                         createGame()
                     }, destination: {
                         
-                        partyScreen(avatarImage: $player1.avatarImage, avatarImage2: $player2.avatarImage, game:$gameToLaunch, pers: pers,min : minutesInput,sec : secondesInput)
+                        partyScreen(avatarImage: $player1.avatarImage, avatarImage2: $player2.avatarImage, game:$gameToLaunch,min : minutesInput,sec : secondesInput)
                         
                     })
                 }
                 
             }
         } .task {
-            await pers.loadPlayer()
-            let p1 = pers.players.first(where: { $0.player.id == .player1 })
-            let p2 = pers.players.first(where: { $0.player.id == .player2 })
+            await PersistanceVM.shared.loadPlayer()
+            let p1 = PersistanceVM.shared.players.first(where: { $0.player.id == .player1 })
+            let p2 = PersistanceVM.shared.players.first(where: { $0.player.id == .player2 })
             player1.name = p1?.player.name ?? ""
             player2.name = p2?.player.name ?? ""
             player1.avatarImage = p1?.image ?? Image("profile_image")
@@ -126,14 +125,14 @@ struct NewParty: View {
             
         }
         .onChange(of: player1.name) { newName in
-            if let p1 = pers.players.first(where: { $0.player.name == newName }) {
+            if let p1 = PersistanceVM.shared.players.first(where: { $0.player.name == newName }) {
                 player1.avatarImage = p1.image ?? Image("profile_image")
             } else {
                 player1.avatarImage = Image("profile_image")
             }
         }
         .onChange(of: player2.name) { newName in
-            if let p2 = pers.players.first(where: { $0.player.name == newName }) {
+            if let p2 = PersistanceVM.shared.players.first(where: { $0.player.name == newName }) {
                 player2.avatarImage = p2.image ?? Image("profile_image")
             } else {
                 player2.avatarImage = Image("profile_image")
@@ -152,10 +151,14 @@ struct NewParty: View {
                 
                 let joueur1 = PlayerVM(player: p1, image: player1.avatarImage,type: player1.type)
                 let joueur2 = PlayerVM(player: p2, image: player2.avatarImage,type: player2.type)
-                pers.players.append(joueur1)
-                pers.players.append(joueur2)
+                if p1 is HumanPlayer {
+                    PersistanceVM.shared.players.append(joueur1)
+                }
+                if p2 is HumanPlayer {
+                    PersistanceVM.shared.players.append(joueur2)
+                }
                 Task {
-                    try await pers.savePlayers()
+                    try await PersistanceVM.shared.savePlayers()
                 }
                 var rules: Rules? = nil
 

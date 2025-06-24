@@ -28,8 +28,8 @@ struct PlayerAvatarEditor: View {
 
             player.avatarImage
                 .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 120, height: 120)
                 .clipShape(Circle())
 
             PhotosPicker(LocalizedStringKey("Modifier"), selection: $player.avatarItem, matching: .images)

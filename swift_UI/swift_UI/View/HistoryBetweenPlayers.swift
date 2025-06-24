@@ -15,14 +15,10 @@ struct HistoryBetweenPlayers: View {
      ]
 
     var body: some View {
-        
         StyleView{
-            
             VStack(spacing: 20) {
-                // Titre
                 Text("Face a Face")
                     .font(Font.custom("Short Baby", size: 32))                
-                // Ligne avatars + score
                 HStack {
                     PlayerView(image:Image(systemName: "person.crop.circle"), playerName: "CodeLord", playerType: "Humain")
                     

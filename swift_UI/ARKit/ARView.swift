@@ -17,9 +17,6 @@ class MyARView: ARView {
 
     required init(frame frameRect: CGRect) {
         super.init(frame: frameRect)
-        applyConfiguration()
-        createBoard()
-        setupGameManager(with: GameViewModel())
     }
     
     required init?(coder decoder: NSCoder) {
@@ -28,9 +25,7 @@ class MyARView: ARView {
 
     convenience init() {
          self.init(frame: UIScreen.main.bounds)
-        applyConfiguration()
         createBoard()
-        setupGameManager(with: GameViewModel())
      }
 
      func setupGameManager(with viewModel: GameViewModel) {

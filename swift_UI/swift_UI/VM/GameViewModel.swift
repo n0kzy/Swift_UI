@@ -53,7 +53,6 @@ public class GameViewModel: ObservableObject, Identifiable {
         let player1 = PlayerVM(player: HumanPlayer(withName: "P2", andId: Owner.player1)!)
         let player2 = PlayerVM(player: HumanPlayer(withName: "P2", andId: Owner.player2)!)
         let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
-        try! Connect4Core.Game(withRules: rules, andPlayer1: player1.player, andPlayer2: player2.player)
         let g = try! Game(withRules: rules, andPlayer1: player1.player, andPlayer2: player2.player)
         self.game = g
         self.editableData = g.editableData
@@ -96,6 +95,23 @@ public class GameViewModel: ObservableObject, Identifiable {
         isEditing = false
     }
     
+    func resetGame() {
+        let player1 = GameViewModel.choosePlayerTypeAndName(.player1, type: p1.type, name: p1.player.name) ?? HumanPlayer(withName: "P1", andId: .player1)!
+        let player2 = GameViewModel.choosePlayerTypeAndName(.player2, type: p2.type, name: p2.player.name) ?? HumanPlayer(withName: "P2", andId: .player2)!
+
+        let rules = Connect4Rules(nbRows: game.rules.nbRows, nbColumns: game.rules.nbColumns, nbPiecesToAlign: game.rules.nbPiecesToAlign)!
+
+        let newGame = try! Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
+
+        self.game = newGame
+        self.p1 = PlayerVM(player: player1)
+        self.p2 = PlayerVM(player: player2)
+        self.currPlayer = .player1
+        self.currMove = Move(of: .player1, toRow: 0, toColumn: 0)
+        self.editableData = newGame.editableData
+    }
+
+    
     static func choosePlayerTypeAndName(_ player: Owner, type: String,name:String) -> Player? {
         switch type.lowercased() {
         case "random":
@@ -117,6 +133,10 @@ public class GameViewModel: ObservableObject, Identifiable {
             print("*************    *************************")
             print("     ==>> 🎉 GAME STARTS! 🎉 <<==     ")
             print("**************************************")
+            
+            if scene.isGameOver {
+                scene.reloadGame()
+            }
             /*
             if self.p1.type != "Human" && self.p2.type != "Human" {
                 let move = Move(of: .player1, toRow: 0, toColumn: 3)
@@ -148,16 +168,19 @@ public class GameViewModel: ObservableObject, Identifiable {
             case .notFinished:
                 print("⏳ Game is not over yet!")
                 return
-            case .winner(winner: let o, alignment: let r):
-                let player = o == .player1 ? "🟡 Joueur 1" : "🔴 Joueur 2"
-                scene.displayEndMessage("🎉 Victoire de \(player) 🎉")
+            case .winner(winner: let o, alignment: _):
+                let player = o == .player1 ? self.p1.player.name : self.p2.player.name
+                scene.displayEndMessage(" Victoire de \(player)")
 
             case .even:
                 print("Game finished with no winner! Congratulations to both of you!")
                 
+            @unknown default:
+                print("error result type unknown")
             }
             Task {
                 try await self.stopEditing()
+                await  PersistanceVM.shared.saveResult(for: self.game, result: result)
                 await  PersistanceVM.shared.deleteGame()
             }
         }

@@ -25,11 +25,11 @@ public class PersistanceVM : ObservableObject {
         
     func saveResult(for game: Game, result: Result) async {
             do {
-                let success = try await Persistance.saveGameResult(
+                    try await Persistance.saveGameResult(
                     withName: "results.json",
                     andGame: game,
                     andResult: result,
-                    withFolderName: "game"
+                    withFolderName: "results"
                 )
             } catch {
                 print("Erreur de sauvegarde du résultat : \(error)")
@@ -39,7 +39,7 @@ public class PersistanceVM : ObservableObject {
     
     func saveGame(game:Game) async {
         do {
-            try await Persistance.saveGame(withName: "game", andGame: game,withFolderName: "game")
+            try await Persistance.saveGame(withName: "game.json", andGame: game,withFolderName: "game")
             
         } catch {
             print("erreur lors de la sauvegarde de la game")
@@ -48,7 +48,7 @@ public class PersistanceVM : ObservableObject {
     }
     func deleteGame() async {
         do {
-            try await Persistance.deleteGame(withName: "game", withFolderName: "game")
+            try await Persistance.deleteGame(withName: "game.json", withFolderName: "game")
             
         } catch {
             print("erreur lors de la suppression de la game")
@@ -60,7 +60,7 @@ public class PersistanceVM : ObservableObject {
             do {
                 if let results = try await Persistance.loadGameResults(
                     withName: "results.json",
-                    withFolderName: "game"
+                    withFolderName: "results"
                 ) {
                     self.results = results
                 } else {
@@ -93,18 +93,16 @@ public class PersistanceVM : ObservableObject {
         }
         return folder
     }
-    func saveImage(_ image: UIImage, name: String) -> URL? {
-        guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
+    func saveImage(_ image: UIImage, name: String) {
+        guard let data = image.jpegData(compressionQuality: 0.8) else { return }
 
         let folder = createImgFolder()
         let filename = folder.appendingPathComponent("\(name).jpg")
 
         do {
             try data.write(to: filename)
-            return filename
         } catch {
             print("Erreur sauvegarde image : \(error)")
-            return nil
         }
     }
 

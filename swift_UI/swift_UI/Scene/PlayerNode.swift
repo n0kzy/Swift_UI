@@ -10,6 +10,7 @@ public class PlayerNode : SKNode {
     let width : CGFloat
     let height : CGFloat
     let color : UIColor
+    
     public init(width: CGFloat,height:CGFloat,color:UIColor) {
         self.width = width
         self.height = height
@@ -38,7 +39,7 @@ public class PlayerNode : SKNode {
     }
     
     var ghost : PlayerNode?
-    
+    var isDraggable: Bool = true
     //obligatoire a override pour faire du drag & drop
     override public var isUserInteractionEnabled: Bool {
         get  { true }
@@ -47,6 +48,7 @@ public class PlayerNode : SKNode {
     
     
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isDraggable else { return }
         let dragged = PlayerNode(width: self.width, height: self.height,color: self.color)
         ghost = dragged
         //on ajoute le dragged comme enfant de la scène
@@ -64,14 +66,14 @@ public class PlayerNode : SKNode {
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let dropped = ghost, let touch = touches.first else { return }
-
         guard let scene = self.scene as? GameScene,
               let boardNode = scene.children.first(where: { $0 is BoardNode }) as? BoardNode else { return }
 
+        guard !scene.isGameOver else { return }
         let (row, col) = getCellCord(from: touch, in: boardNode)
 
         dropped.removeFromParent()
-            if col >= 0 && col < boardNode.nbColumns {
+        if col >= 0 && col < boardNode.nbColumns {
                 Task {
                     await scene.addPiece(dropped, atColumn: col,atRow: row,color:self.color)
                 }

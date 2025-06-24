@@ -50,13 +50,13 @@ class ARGameManager {
         let finalPosition = SIMD3<Float>(0, Float(row) * 2, Float(column) * 2)
         let startPosition = finalPosition + SIMD3<Float>(0, 20, 0)
         token.position = startPosition
-        anchor.addChild(token)
+        await anchor.addChild(token)
 
         // Anime la chute
         let duration: Float = 0.3
-        var transform = token.transform
+        var transform = await token.transform
         transform.translation = finalPosition
-        token.move(to: transform, relativeTo: anchor, duration: TimeInterval(duration), timingFunction: .easeOut)
+        await token.move(to: transform, relativeTo: anchor, duration: TimeInterval(duration), timingFunction: .easeOut)
 
         // Change le joueur
         currentPlayer = (currentPlayer == .player1) ? .player2 : .player1

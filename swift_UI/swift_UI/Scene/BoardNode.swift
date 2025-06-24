@@ -52,6 +52,10 @@ public class BoardNode: SKNode {
         }
         self.addChild(cellsNode)
     }
+    
+    func resetCells() {
+        cellMatric = []
+    }
 
 /*
     func addPiece(_ piece: SKNode, atColumn col: Int,atRow row:Int,color:UIColor) async {

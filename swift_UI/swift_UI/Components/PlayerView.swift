@@ -17,8 +17,8 @@ struct PlayerView: View {
             VStack {
                 image
                     .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 100)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 120, height: 120)
                     .clipShape(Circle())
                 Text(playerName)
                     .font(.headline)

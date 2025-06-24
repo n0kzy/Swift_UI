@@ -9,7 +9,6 @@ let resultSections: [(title: String, filter: (GameResult) -> Bool)] = [
 
 struct Historique: View {
     @State private var g: Game? = nil
-    @ObservedObject var persistanceVM: PersistanceVM
     var body: some View {
         StyleView{
         ScrollView{
@@ -24,7 +23,7 @@ struct Historique: View {
 
 
                         
-                        ForEach(persistanceVM.results.filter(section.filter), id: \.date) { result in
+                        ForEach(PersistanceVM.shared.results.filter(section.filter), id: \.date) { result in
                             
                             HStack {
                                 CustomStats(
@@ -40,6 +39,7 @@ struct Historique: View {
                                     )]
                                 )
                                 .padding()
+
                                 /*
                                 if section.title == "terminées" {
                                     if let safeGame = g {
@@ -64,6 +64,8 @@ struct Historique: View {
                         }
                         }
                     }
+        } .task {
+                    await PersistanceVM.shared.loadResults()
                 }
             }
         }
@@ -88,7 +90,7 @@ struct Historique: View {
         //let gamesVM = GamesVM(with: [coreGame]
         //let results = [GameResult] = []
         
-    return Historique(persistanceVM: PersistanceVM(results: [], players: []))
+    return Historique()
             .preferredColorScheme(.dark)
 }
 

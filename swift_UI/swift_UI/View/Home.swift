@@ -8,8 +8,6 @@
 import SwiftUI
 import SpriteKit
 struct HomeView: View {
-    //ToolBarItem
-    @ObservedObject var pers = PersistanceVM()
 
     var body: some View {
             StyleView {
@@ -26,7 +24,7 @@ struct HomeView: View {
                     Text("Puissance 4")
                         .font(.custom("Short Baby", size: 32))
                     
-                    CustomButton(text: "NOUVELLE PARTIE",destination: { NewParty(pers: pers) }).padding()
+                    CustomButton(text: "NOUVELLE PARTIE",destination: { NewParty() }).padding()
                     
                     CustomButton(text: "RESULTATS") {
                         HistoryBetweenPlayers()

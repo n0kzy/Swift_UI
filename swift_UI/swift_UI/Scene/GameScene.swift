@@ -11,12 +11,12 @@ import Connect4Core
 import Connect4Rules
 public class GameScene: SKScene {
     
-    //la gameScene connait la GameViewMode
-
     var gameViewModel : GameViewModel
     var p1: PlayerNode!
     var p2: PlayerNode!
     var boardNode : BoardNode
+    var isGameOver = false
+    
      public init(size:CGSize,gameViewModel: GameViewModel) {
          self.gameViewModel = gameViewModel
          let boardNode = BoardNode(width: size.width , height: size.height - 150, g:gameViewModel)
@@ -36,7 +36,24 @@ public class GameScene: SKScene {
 
     }
     
+    public func reloadGame() {
+        isGameOver = false
+        self.removeAllChildren()
+        self.addChild(boardNode)
+        initTopBar()
+        boardNode.removeAllChildren()
+        boardNode.resetCells()
+        gameViewModel.resetGame()
+        boardNode.initCells()
+    }
+    
     public func onPlay(row:Int,col:Int) async -> Int {
+        
+        guard !isGameOver else {
+            print("jeu terminé")
+            return -1
+        }
+        
         let m = await gameViewModel.playMove(column:col)
         p1.isHidden = self.gameViewModel.getCurrPlayer != .player1
         p2.isHidden = self.gameViewModel.getCurrPlayer != .player2
@@ -44,17 +61,19 @@ public class GameScene: SKScene {
     }
 
     func displayEndMessage(_ message: String) {
+        isGameOver = true
         let label = SKLabelNode(text: message)
-        label.fontSize = 40
+        label.name = "messageLabel"
+        label.fontSize = 60
         label.fontColor = .white
         label.fontName = "Helvetica-Bold"
-        label.position = CGPoint(x: 0, y: 0)
-        label.zPosition = 10
-        label.numberOfLines = 2
-        label.preferredMaxLayoutWidth = size.width * 0.8
+        label.position = CGPoint(x: 0, y: 250)
+        label.zPosition = 1
         label.horizontalAlignmentMode = .center
         label.verticalAlignmentMode = .center
         self.addChild(label)
+        p1.removeFromParent()
+        p2.removeFromParent()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,12 +108,12 @@ public class GameScene: SKScene {
         let shake = SKAction.sequence([shakeLeft, shakeRight, shakeBack])
         let repeatShake = SKAction.repeat(shake, count: 3)
         let fullSequence = SKAction.sequence([fall, repeatShake])
-        
+        piece.isDraggable = false
         await piece.run(fullSequence)
 
     }
 
-    func addPiece(_ piece: SKNode, atColumn col: Int,atRow row:Int,color:UIColor) async {
+    func addPiece(_ piece: PlayerNode, atColumn col: Int,atRow row:Int,color:UIColor) async {
         let cellWidth = boardNode.width / CGFloat(gameViewModel.game.board.nbColumns)
         let cellHeight = boardNode.height / CGFloat(gameViewModel.game.board.nbRows)
         //await game?.playMove(column: col)
@@ -125,6 +144,7 @@ public class GameScene: SKScene {
                 settle.timingMode = .easeIn
 
                 let sequence = SKAction.sequence([fall, bounce, settle])
+                piece.isDraggable = false
                 await piece.run(sequence)
             }
         }
@@ -132,6 +152,7 @@ public class GameScene: SKScene {
     
     func initTopBar() {
         let topBar = SKNode()
+        topBar.name = "topBar"
         topBar.position = CGPoint(x: 0, y: size.height / 2 - ( 150 / 2))
         self.addChild(topBar)
         
