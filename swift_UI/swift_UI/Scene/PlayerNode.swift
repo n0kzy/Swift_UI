@@ -65,22 +65,17 @@ public class PlayerNode : SKNode {
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let dropped = ghost, let touch = touches.first else { return }
 
-        guard let scene = self.scene,
+        guard let scene = self.scene as? GameScene,
               let boardNode = scene.children.first(where: { $0 is BoardNode }) as? BoardNode else { return }
 
-        //let locationInBoard = touch.location(in: boardNode)
-
-//        let cellWidth = boardNode.width / CGFloat(boardNode.nbColumns)
-        //let cellHeight = boardNode.height / CGFloat(boardNode.nbRows)
-        
         let (row, col) = getCellCord(from: touch, in: boardNode)
 
-        //let col = Int((locationInBoard.x + boardNode.width / 2) / cellWidth)
         dropped.removeFromParent()
-        if col >= 0 && col < boardNode.nbColumns {
-             boardNode.addPiece(dropped, atColumn: col,atRow: row)
-             //boardNode.cellMatric[row][col].ghost =
-        }
+            if col >= 0 && col < boardNode.nbColumns {
+                Task {
+                    await scene.addPiece(dropped, atColumn: col,atRow: row,color:self.color)
+                }
+            }
 
         ghost = nil
     }

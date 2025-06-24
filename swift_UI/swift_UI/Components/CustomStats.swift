@@ -23,11 +23,11 @@ struct CustomStats: View {
             
             ForEach(matches, id: \.0) { match in
                 HStack {
-                    Text(match.0)
+                    Text(LocalizedStringKey(match.0))
                     Spacer()
-                    Text(match.1)
+                    Text(LocalizedStringKey(match.1))
                     Spacer()
-                    Text(match.2)
+                    Text(LocalizedStringKey(match.2))
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 4)

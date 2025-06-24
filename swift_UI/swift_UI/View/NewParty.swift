@@ -8,50 +8,53 @@
 import SwiftUI
 import PhotosUI
 import Connect4Core
+import Connect4Rules
 
 struct NewParty: View {
     @State private var selectedItem = "Classique"
-    @State private var selectedType = "Player"
     @State private var lignes = 6
     @State private var jetons = 4
     @State private var colonnes = 7
-    @State private var secondesInput: String = "0"
-    @State private var minutesInput: String = "1"
+    @State private var secondesInput: Int = 0
+    @State private var minutesInput = 1
     @State private var naviguer:Bool = false
     @State private var player1 = TempPlayerData()
     @State private var player2 = TempPlayerData(label:"Joueur 2")
-    @State var gameToLaunch: GameViewModel
+    @State var gameToLaunch = GameViewModel()
     
-    @StateObject var games = GamesVM(with: [])
-    @StateObject var pers : PersistanceVM
+    //
+    @ObservedObject var pers : PersistanceVM
+    //@ObservedObject var persistanceVM: PersistanceVM
+    
     // Liste des options
-    let options = ["Classique", "Tic Tac Toe", "Morpion"]
-    let typePlayer = ["Player","IA"]
+    let options = ["Classique", "Tic Tac Toe", "PopOut"]
+    let typePlayer = ["Human", "Random", "Finnish Him", "Simple NegaMax"]
     var body: some View {
         StyleView{
             ScrollView {
                 VStack {
                     Text("NOUVELLE PARTIE").font(Font.custom("Short Baby",size:32)).padding()
-                    
                     HStack {
-                        PlayerAvatarEditor(
-                            player:$player1
-                        )
-                        Picker("Choisir joueur 1", selection: $player1.name) {
-                              ForEach(pers.players.map { $0.player.name }, id: \.self) { name in
-                                  Text(name).tag(name)
-                              }
-                          }
-                          .pickerStyle(MenuPickerStyle())
+                        VStack {
+                            PlayerAvatarEditor(
+                                player:$player1,
+                                pers:pers
+                            )
+                            
+                            .pickerStyle(MenuPickerStyle())
+                            CustomPicker(selectedItem:$player1.type, options: typePlayer, text: "joueur")
+                        }
                         Spacer()
                         
                         VStack {
                             PlayerAvatarEditor(
-                                player:$player2
-
+                                player:$player2,
+                                pers:pers
+                                
                             )
+                            .pickerStyle(MenuPickerStyle())
                             
-                            CustomPicker(selectedItem: $selectedType, options: typePlayer, text: "joueur")
+                            CustomPicker(selectedItem:$player2.type, options: typePlayer, text: "joueur")
                             
                         }
                         
@@ -68,8 +71,8 @@ struct NewParty: View {
                         }
                         ForEach([("Lignes", $lignes), ("Colonnes", $colonnes), ("Jetons", $jetons)], id: \.0) { name, value in
                             GridRow {
-                                Text(name)
-                                TextField(name, value: value, formatter: NumberFormatter())
+                                Text(LocalizedStringKey(name))
+                                TextField(LocalizedStringKey(name), value: value, formatter: NumberFormatter())
                                     .multilineTextAlignment(.center)
                                     .frame(width: 50)
                                     .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.trailing,20)
@@ -80,12 +83,22 @@ struct NewParty: View {
                     
                     HStack {
                         Text("limite de temps:")
-                        TextField("0", text: $minutesInput)
+                        TextField("0", text:
+                            Binding(
+                                get: { String(minutesInput) },
+                                set: { newValue in
+                                    minutesInput = Int(newValue) ?? 0
+                                }))
                             .frame(width: 40)
                             .multilineTextAlignment(.center)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         Text("min")
-                        TextField("0", text: $secondesInput)
+                        TextField("0", text:
+                            Binding(
+                            get: { String(secondesInput) },
+                            set: { newValue in
+                                secondesInput = Int(newValue) ?? 0
+                            }))
                             .frame(width: 40)
                             .multilineTextAlignment(.center)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -93,56 +106,86 @@ struct NewParty: View {
                         Text("sec")
                     }
                     CustomButton(text: "JOUER", execute:{
-                        Task {
-                            await createGame()
-                        }
+                        createGame()
                     }, destination: {
                         
-                        partyScreen(avatarImage: $player1.avatarImage, avatarImage2: $player2.avatarImage, game:$gameToLaunch,games: games, pers: pers)
+                        partyScreen(avatarImage: $player1.avatarImage, avatarImage2: $player2.avatarImage, game:$gameToLaunch, pers: pers,min : minutesInput,sec : secondesInput)
                         
                     })
                 }
-
+                
             }
         } .task {
             await pers.loadPlayer()
-            if let first = pers.players.first {
-                player1.name = first.player.name
-            }
-            if let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                print("Documents directory: \(documents.path)")
+            let p1 = pers.players.first(where: { $0.player.id == .player1 })
+            let p2 = pers.players.first(where: { $0.player.id == .player2 })
+            player1.name = p1?.player.name ?? ""
+            player2.name = p2?.player.name ?? ""
+            player1.avatarImage = p1?.image ?? Image("profile_image")
+            player2.avatarImage = p2?.image ?? Image("profile_image")
+            
+        }
+        .onChange(of: player1.name) { newName in
+            if let p1 = pers.players.first(where: { $0.player.name == newName }) {
+                player1.avatarImage = p1.image ?? Image("profile_image")
+            } else {
+                player1.avatarImage = Image("profile_image")
             }
         }
+        .onChange(of: player2.name) { newName in
+            if let p2 = pers.players.first(where: { $0.player.name == newName }) {
+                player2.avatarImage = p2.image ?? Image("profile_image")
+            } else {
+                player2.avatarImage = Image("profile_image")
+            }
+        }
+
     }
-    func createGame () async {
+
+    func createGame ()  {
             do {
-                    await pers.loadPlayer()
-                print("pass pas")
-                print(pers.players.count)
-                if let firstPlayer = pers.players.first {
-                    print("pass")
-                    player1.name = firstPlayer.player.name
-                }
-                guard let p1 = Player(withName: player1.name, andId: Owner.player1),
-                      let p2 = Player(withName: player2.name, andId: Owner.player2) else {
+                guard let p1 = GameViewModel.choosePlayerTypeAndName(.player1, type: player1.type, name: player1.name),
+                      let p2 = GameViewModel.choosePlayerTypeAndName(.player2, type: player2.type, name: player2.name) else {
                     print("Erreur de création des joueurs")
                     return
                 }
+                
+                let joueur1 = PlayerVM(player: p1, image: player1.avatarImage,type: player1.type)
+                let joueur2 = PlayerVM(player: p2, image: player2.avatarImage,type: player2.type)
+                pers.players.append(joueur1)
+                pers.players.append(joueur2)
+                Task {
+                    try await pers.savePlayers()
+                }
+                var rules: Rules? = nil
 
-                let joueur1 = PlayerVM(player: p1, image: player1.avatarImage)
-                let joueur2 = PlayerVM(player: p2, image: player2.avatarImage)
+                if selectedItem == "Tic Tac Toe" {
+                    rules = TicTacToeRules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)
+                    if rules == nil {
+                        print("Erreur création règles Tic Tac Toe")
+                    }
+                } else if selectedItem == "PopOut" {
+                    rules = PopOutRules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)
+                    if rules == nil {
+                        print("Erreur création règles PopOut")
+                    }
+                } else {
+                    rules = Connect4Rules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)
+                    if rules == nil {
+                        print("Erreur création règles Connect4")
+                    }
+                }
 
-                //if(selectedItem == "Tic Tac Toe"){
-                    let rules = Connect4Rules(nbRows: lignes, nbColumns: colonnes, nbPiecesToAlign: jetons)!
-                //}
-                    let coreGame = try? Connect4Core.Game(withRules: rules, andPlayer1: joueur1.player, andPlayer2: joueur2.player)
-                gameToLaunch = GameViewModel(game: coreGame!)
+                    
+                let coreGame = try? Connect4Core.Game(withRules: rules!, andPlayer1: joueur1.player, andPlayer2: joueur2.player)
+                gameToLaunch = GameViewModel(game: coreGame!,p1: joueur1,p2: joueur2)
 
             }
         }
     }
 
-    
+   
+/*
 #Preview {
     //let pers = PersistanceVM(games: [], players: [])
     let player1 = Player(withName: "test", andId: Owner.player1)!
@@ -150,15 +193,14 @@ struct NewParty: View {
     let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
     let coreGame = try! Connect4Core.Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
 
-    let pers = PersistanceVM(games: [], players: [])
-    Task {
-        await pers.loadPlayer()
-    }
+    let pers = PersistanceVM( players: [])
+    
     let viewModel = GameViewModel(game: coreGame)
     
     
-    return NewParty(gameToLaunch: viewModel,pers:pers)
+     return NewParty(gameToLaunch: viewModel,pers:pers)
     //permet de partager un objet ObservableObject à travers toute la hiérarchie des vues, sans avoir à le passer explicitement en paramètre à chaque vue
         .preferredColorScheme(.dark)
 }
 
+*/

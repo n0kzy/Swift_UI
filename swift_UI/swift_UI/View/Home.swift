@@ -9,12 +9,13 @@ import SwiftUI
 import SpriteKit
 struct HomeView: View {
     //ToolBarItem
+    @ObservedObject var pers = PersistanceVM()
 
     var body: some View {
             StyleView {
                 
                 VStack {
-                    Text("Home").font(Font.custom("Short Baby", size: 32))
+                    Text("Accueil").font(Font.custom("Short Baby", size: 32))
                     
                     Image("connect")
                         .resizable()
@@ -25,14 +26,12 @@ struct HomeView: View {
                     Text("Puissance 4")
                         .font(.custom("Short Baby", size: 32))
                     
-                    CustomButton(text: "NOUVELLE PARTIE") {
-                        HistoryBetweenPlayers()
-                    }
+                    CustomButton(text: "NOUVELLE PARTIE",destination: { NewParty(pers: pers) }).padding()
                     
                     CustomButton(text: "RESULTATS") {
                         HistoryBetweenPlayers()
                     }
-                    
+            
                 }
             }
     }

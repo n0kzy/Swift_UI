@@ -8,7 +8,7 @@
 import SwiftUI
 import Connect4Core
 
-class BoardVM: ObservableObject {
+public class BoardVM: ObservableObject {
     @Published var board : Board
     
     init(board: Board) {

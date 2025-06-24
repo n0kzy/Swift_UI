@@ -32,7 +32,8 @@ struct CustomButton<Destination: View>: View {
                 execute?()
                 naviguer = true
             }) {
-                Text(text)
+                Text(LocalizedStringKey(text))
+
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)

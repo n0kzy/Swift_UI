@@ -11,7 +11,7 @@ import SwiftUI
 struct StyleView<Content: View>: View {
     let content: () -> Content
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [.bg, .bg2]),
                                startPoint: .top,

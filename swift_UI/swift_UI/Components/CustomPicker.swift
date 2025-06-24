@@ -15,8 +15,8 @@ struct CustomPicker: View {
     
     var body: some View {
         HStack{
-            Text(text)
-            Picker("choix", selection: $selectedItem){
+            Text(LocalizedStringKey(text))
+            Picker(LocalizedStringKey("choix"), selection: $selectedItem){
                 ForEach(options, id: \.self) { option in
                     Text(option)
                 }

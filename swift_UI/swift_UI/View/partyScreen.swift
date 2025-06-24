@@ -7,24 +7,25 @@
 
 import SwiftUI
 import SpriteKit
+import Connect4Persistance
 
 struct partyScreen: View {
-    let options = ["Classique", "Tic Tac Toe", "Morpion"]
-    @State private var selectedItem = "Classique"
     @Binding var avatarImage: Image
     @Binding var avatarImage2: Image
     @Binding var game : GameViewModel
-    @State var games : GamesVM
-    @State var pers : PersistanceVM
-
+    
+    @ObservedObject var pers : PersistanceVM
     //@Binding var timer : Timer
     //@State var selectedVal : String = game.game.type
+    @State var min: Int = 60
+    @State var sec : Int = 0
+    @State var val = 0
+    @State var timer = Timer()
 
     var scene: GameScene {
         GameScene(
             size: CGSize(width: 700, height: 700),
-            nbRows: game.game.board.nbRows,
-            nbColumns: game.game.board.nbColumns
+            gameViewModel: game
         )
     }
 
@@ -33,15 +34,13 @@ struct partyScreen: View {
                 VStack {
                     VStack{
                         HStack{
-                            PlayerView(image:avatarImage, playerName: game.game.players[.player1]!.name, playerType: "Humain",color: .yellow)
+                            PlayerView(image:avatarImage, playerName: game.game.players[.player1]!.name, playerType:game.p1.type,color: .yellow)
                             
-                            PlayerView(image:avatarImage2, playerName: game.game.players[.player2]!.name, playerType: "IA",color: .red)
+                            PlayerView(image:avatarImage2, playerName: game.game.players[.player2]!.name, playerType:game.p2.type,color: .red)
                             
                             
                         }.padding(50)
-                        CustomButton(text: "test", execute: add) {
-                            Historique(data: games)
-                        }
+
                         //VGrid LazyGrid
                         VStack {
                             GeometryReader { geometry in
@@ -61,32 +60,24 @@ struct partyScreen: View {
                         print("Pause")
                     }){
                         Image(systemName: "pause.fill")
-                    }
-                    VStack{
-                        CustomPicker(selectedItem: $selectedItem, options: options, text: "Règles")
-                        Text("\(game.game.editableData.type)")
-                        CustomButton(text: "test", execute: add) {
-                            Historique(data: games)
-                        }
-
+                        Text(String(val))
                     }
                 }
             }.foregroundStyle(.main).font(.custom("Short Baby", size: 16, relativeTo: .body))
+            .onAppear {
+                val = min * 60 + sec
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                    if val > 0 {
+                        val -= 1
+                    }
+                 }
+             }
     }
     func add()
     {
-            games.update(with: game)
-            pers.games.append(game)
-        if let player = game.game.players[.player1] {
-            let playerVM = PlayerVM(player: player, image: Image("connect")) // ou l'image que tu veux
-            pers.players.append(playerVM)
+        Task {
+            await pers.loadResults()
         }
-        if let player = game.game.players[.player1] {
-            let playerVM = PlayerVM(player: player, image: Image("connect")) // ou l'image que tu veux
-            pers.players.append(playerVM)
-        }
-        pers.saveGame()
-        pers.savePlayers()
             
     }
     func foundSize(containerSize:CGSize, _ sceneSize:CGSize) -> CGSize {

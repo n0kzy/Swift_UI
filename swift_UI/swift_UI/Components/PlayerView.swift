@@ -22,7 +22,7 @@ struct PlayerView: View {
                     .clipShape(Circle())
                 Text(playerName)
                     .font(.headline)
-                Text(playerType)
+                Text(LocalizedStringKey(playerType))
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }

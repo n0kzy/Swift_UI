@@ -4,9 +4,6 @@
     "" : {
 
     },
-    "%@" : {
-
-    },
     "%lld - %lld" : {
       "localizations" : {
         "en" : {
@@ -30,14 +27,68 @@
     "0" : {
 
     },
+    "Accueil" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
     "Choisir joueur 1" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "choose player 1"
+          }
+        }
+      }
     },
     "choix" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "choice"
+          }
+        }
+      }
+    },
+    "Colonnes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Columns"
+          }
+        }
+      }
     },
     "Dimensions :" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions"
+          }
+        }
+      }
+    },
+    "Échec du chargement de l'image." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error while loading the image"
+          }
+        }
+      }
     },
     "en cours" : {
       "extractionState" : "manual",
@@ -51,10 +102,36 @@
       }
     },
     "Face a Face" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face to Face"
+          }
+        }
+      }
     },
     "Home" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "Jetons" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokens"
+          }
+        }
+      }
     },
     "JOUER" : {
       "extractionState" : "manual",
@@ -78,17 +155,59 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
+    "Lignes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rows"
+          }
+        }
+      }
+    },
     "limite de temps:" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "time limit"
+          }
+        }
+      }
     },
     "min" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        }
+      }
     },
     "Modifier" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modify"
+          }
+        }
+      }
     },
     "name" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name"
+          }
+        }
+      }
     },
     "NOUVELLE PARTIE" : {
       "extractionState" : "manual",
@@ -146,7 +265,14 @@
       }
     },
     "sec" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "s"
+          }
+        }
+      }
     },
     "terminées" : {
       "extractionState" : "manual",

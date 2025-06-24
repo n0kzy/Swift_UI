@@ -20,6 +20,7 @@ public class CellNode: SKNode {
         let shapeNode = SKShapeNode(ellipseOf: CGSize(width: width, height: height))
         shapeNode.fillColor = .white
         shapeNode.strokeColor = .black
+        shapeNode.lineWidth = 5
         self.addChild(shapeNode)
     }
     

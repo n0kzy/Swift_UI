@@ -12,16 +12,17 @@ public class BoardNode: SKNode {
     let height : CGFloat
     let nbColumns : Int
     let nbRows : Int
+    var g : GameViewModel
     
-    public init(width: CGFloat, height: CGFloat, nbColumns: Int, nbRows: Int) {
+    public init(width: CGFloat, height: CGFloat,g:GameViewModel) {
         self.width = width
         self.height = height
-        self.nbColumns = nbColumns
-        self.nbRows = nbRows
+        self.g = g
+        self.nbColumns = g.game.board.nbColumns
+        self.nbRows = g.game.board.nbRows
         super.init()
         let rect = SKShapeNode(rect: CGRect(x: -width / 2, y: -height / 2, width: width, height: height))
         rect.fillColor = .blue
-        rect.strokeColor = .cyan
         rect.zPosition = -1
         self.addChild(rect)
         initCells()
@@ -52,15 +53,21 @@ public class BoardNode: SKNode {
         self.addChild(cellsNode)
     }
 
-    func addPiece(_ piece: SKNode, atColumn col: Int,atRow row:Int) {
+/*
+    func addPiece(_ piece: SKNode, atColumn col: Int,atRow row:Int,color:UIColor) async {
         let cellWidth = width / CGFloat(nbColumns)
         let cellHeight = height / CGFloat(nbRows)
         //await game?.playMove(column: col)
-        let x = CGFloat(col) * cellWidth + cellWidth / 2 - width / 2
-        let y = CGFloat(row) * cellHeight + cellHeight / 2 - height / 2
-        piece.position = CGPoint(x: x, y: y)
+        if let gameScene = self.scene as? GameScene {
+            await gameScene.onPlay(row: row, col: col)
+            let data = g.currMove
+            let x = CGFloat(data.col) * cellWidth + cellWidth / 2 - width / 2
+            let y = CGFloat(data.row) * cellHeight + cellHeight / 2 - height / 2
+            piece.position = CGPoint(x: x, y: y)
+        }
         self.addChild(piece)
     }
+ */
 
     
 }

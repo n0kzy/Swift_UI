@@ -17,15 +17,17 @@ struct swift_UIApp: App {
             let rules = Connect4Rules(nbRows: 6, nbColumns: 7, nbPiecesToAlign: 4)!
             let coreGame = try! Connect4Core.Game(withRules: rules, andPlayer1: player1, andPlayer2: player2)
             
-            let pers = PersistanceVM(games: [], players: [])
+            let pers = PersistanceVM( players: [])
             Task {
                 await pers.loadPlayer()
             }
             let viewModel = GameViewModel(game: coreGame)
             
             
-            return NewParty(gameToLaunch: viewModel,pers:pers)
+            //return NewParty(gameToLaunch: viewModel,pers:pers)
+            return HomeView()
             
+            //MyARViewContainer()
         }
     }
 }

@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC4362962DDDBB260000F159 /* C4Rules.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362922DDDBB260000F159 /* C4Rules.xcframework */; };
-		EC4362972DDDBB260000F159 /* C4Rules.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362922DDDBB260000F159 /* C4Rules.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		EC4362982DDDBB260000F159 /* C4.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362932DDDBB260000F159 /* C4.xcframework */; };
-		EC4362992DDDBB260000F159 /* C4.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362932DDDBB260000F159 /* C4.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		EC43629A2DDDBB260000F159 /* C4Players.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362942DDDBB260000F159 /* C4Players.xcframework */; };
-		EC43629B2DDDBB260000F159 /* C4Players.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362942DDDBB260000F159 /* C4Players.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		EC4362D02DDF105E0000F159 /* Extensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362CF2DDF105E0000F159 /* Extensions.framework */; };
-		EC4362D12DDF105E0000F159 /* Extensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362CF2DDF105E0000F159 /* Extensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC43634F2DF0605A0000F159 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC43634E2DF0605A0000F159 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		EC4363552DFAC8650000F159 /* C4Persistance.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4363542DFAC8650000F159 /* C4Persistance.xcframework */; };
-		EC4363562DFAC8650000F159 /* C4Persistance.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4363542DFAC8650000F159 /* C4Persistance.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC956D432DD47004006B7F69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EC956D422DD47004006B7F69 /* Localizable.xcstrings */; };
+		ECDEA8522E0A92670003F1DB /* C4Players.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362852DDDBA470000F159 /* C4Players.xcframework */; };
+		ECDEA8532E0A92670003F1DB /* C4Players.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362852DDDBA470000F159 /* C4Players.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECDEA8582E0A92730003F1DB /* C4Core.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECDEA8572E0A92730003F1DB /* C4Core.xcframework */; };
+		ECDEA8592E0A92730003F1DB /* C4Core.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ECDEA8572E0A92730003F1DB /* C4Core.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECDEA85A2E0A927A0003F1DB /* C4Rules.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362882DDDBA470000F159 /* C4Rules.xcframework */; };
+		ECDEA85B2E0A927A0003F1DB /* C4Rules.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362882DDDBA470000F159 /* C4Rules.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECDEA85C2E0A927F0003F1DB /* C4Persistance.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362862DDDBA470000F159 /* C4Persistance.xcframework */; };
+		ECDEA85D2E0A927F0003F1DB /* C4Persistance.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC4362862DDDBA470000F159 /* C4Persistance.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,17 +37,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EC43629E2DDDBB260000F159 /* Embed Frameworks */ = {
+		ECDEA8542E0A92670003F1DB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EC4363562DFAC8650000F159 /* C4Persistance.xcframework in Embed Frameworks */,
-				EC4362992DDDBB260000F159 /* C4.xcframework in Embed Frameworks */,
-				EC43629B2DDDBB260000F159 /* C4Players.xcframework in Embed Frameworks */,
-				EC4362972DDDBB260000F159 /* C4Rules.xcframework in Embed Frameworks */,
-				EC4362D12DDF105E0000F159 /* Extensions.framework in Embed Frameworks */,
+				ECDEA85D2E0A927F0003F1DB /* C4Persistance.xcframework in Embed Frameworks */,
+				ECDEA85B2E0A927A0003F1DB /* C4Rules.xcframework in Embed Frameworks */,
+				ECDEA8592E0A92730003F1DB /* C4Core.xcframework in Embed Frameworks */,
+				ECDEA8532E0A92670003F1DB /* C4Players.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,13 +62,13 @@
 		EC4362932DDDBB260000F159 /* C4.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4.xcframework; sourceTree = "<group>"; };
 		EC4362942DDDBB260000F159 /* C4Players.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Players.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4Players.xcframework; sourceTree = "<group>"; };
 		EC4362952DDDBB260000F159 /* C4Persistance.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Persistance.xcframework; path = ../../../Downloads/connect4_swiftui/xcframeworks/C4Persistance.xcframework; sourceTree = "<group>"; };
-		EC4362CF2DDF105E0000F159 /* Extensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Extensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC43634E2DF0605A0000F159 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		EC4363542DFAC8650000F159 /* C4Persistance.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Persistance.xcframework; path = "../../../Downloads/connect4_swiftui-2/xcframeworks/C4Persistance.xcframework"; sourceTree = "<group>"; };
 		EC956D142DD46E42006B7F69 /* swift_UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swift_UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D252DD46E43006B7F69 /* swift_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swift_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D2F2DD46E43006B7F69 /* swift_UIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swift_UIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC956D422DD47004006B7F69 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		ECDEA8572E0A92730003F1DB /* C4Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = C4Core.xcframework; path = ../../Connect4_SwiftUI/xcframeworks/C4Core.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +92,11 @@
 			path = swift_UIUITests;
 			sourceTree = "<group>";
 		};
+		ECDEA7E62E0A8DFA0003F1DB /* ARKit */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ARKit;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,11 +105,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC43634F2DF0605A0000F159 /* UIKit.framework in Frameworks */,
-				EC4362982DDDBB260000F159 /* C4.xcframework in Frameworks */,
-				EC4363552DFAC8650000F159 /* C4Persistance.xcframework in Frameworks */,
-				EC43629A2DDDBB260000F159 /* C4Players.xcframework in Frameworks */,
-				EC4362962DDDBB260000F159 /* C4Rules.xcframework in Frameworks */,
-				EC4362D02DDF105E0000F159 /* Extensions.framework in Frameworks */,
+				ECDEA8582E0A92730003F1DB /* C4Core.xcframework in Frameworks */,
+				ECDEA85C2E0A927F0003F1DB /* C4Persistance.xcframework in Frameworks */,
+				ECDEA8522E0A92670003F1DB /* C4Players.xcframework in Frameworks */,
+				ECDEA85A2E0A927A0003F1DB /* C4Rules.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,9 +132,9 @@
 		EC4362842DDDBA470000F159 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ECDEA8572E0A92730003F1DB /* C4Core.xcframework */,
 				EC4363542DFAC8650000F159 /* C4Persistance.xcframework */,
 				EC43634E2DF0605A0000F159 /* UIKit.framework */,
-				EC4362CF2DDF105E0000F159 /* Extensions.framework */,
 				EC4362932DDDBB260000F159 /* C4.xcframework */,
 				EC4362952DDDBB260000F159 /* C4Persistance.xcframework */,
 				EC4362942DDDBB260000F159 /* C4Players.xcframework */,
@@ -149,6 +150,7 @@
 		EC956D0B2DD46E42006B7F69 = {
 			isa = PBXGroup;
 			children = (
+				ECDEA7E62E0A8DFA0003F1DB /* ARKit */,
 				EC4362322DDB07260000F159 /* font */,
 				EC956D422DD47004006B7F69 /* Localizable.xcstrings */,
 				EC956D162DD46E42006B7F69 /* swift_UI */,
@@ -179,7 +181,7 @@
 				EC956D102DD46E42006B7F69 /* Sources */,
 				EC956D112DD46E42006B7F69 /* Frameworks */,
 				EC956D122DD46E42006B7F69 /* Resources */,
-				EC43629E2DDDBB260000F159 /* Embed Frameworks */,
+				ECDEA8542E0A92670003F1DB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,6 +190,7 @@
 			fileSystemSynchronizedGroups = (
 				EC4362322DDB07260000F159 /* font */,
 				EC956D162DD46E42006B7F69 /* swift_UI */,
+				ECDEA7E62E0A8DFA0003F1DB /* ARKit */,
 			);
 			name = swift_UI;
 			packageProductDependencies = (
@@ -474,9 +477,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"swift_UI/Preview Content\"";
+				DEVELOPMENT_TEAM = 7UULT4M6BJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "swift-UI-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera need";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -487,7 +492,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
@@ -512,9 +517,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"swift_UI/Preview Content\"";
+				DEVELOPMENT_TEAM = 7UULT4M6BJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "swift-UI-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera need";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -525,7 +532,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;

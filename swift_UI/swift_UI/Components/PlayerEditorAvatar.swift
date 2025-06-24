@@ -16,13 +16,13 @@ struct PlayerAvatarEditor: View {
     //@Binding var avatarImage: Image
     
     @Binding var player : TempPlayerData
-
+    @State var pers : PersistanceVM
     var body: some View {
         VStack {
             Text(player.label)
                 .font(.caption)
                 .foregroundColor(.gray)
-            TextField("name",text: $player.name)
+            TextField(LocalizedStringKey("name"),text: $player.name)
                 .multilineTextAlignment(.center)
                 .font(.headline)
 
@@ -32,14 +32,20 @@ struct PlayerAvatarEditor: View {
                 .frame(width: 100, height: 100)
                 .clipShape(Circle())
 
-            PhotosPicker("Modifier", selection: $player.avatarItem, matching: .images)
+            PhotosPicker(LocalizedStringKey("Modifier"), selection: $player.avatarItem, matching: .images)
+            
+            Picker(LocalizedStringKey("Choisir joueur 1"), selection: $player.name) {
+                ForEach(pers.players.map { $0.player.name }, id: \.self) { name in
+                    Text(name).tag(name)
+                }
+            }
         }
         .onChange(of: player.avatarItem) { _ in
             Task {
                 if let loaded = try? await player.avatarItem?.loadTransferable(type: Image.self) {
                     player.avatarImage = loaded
                 } else {
-                    print("Échec du chargement de l'image.")
+                    print(LocalizedStringKey("Échec du chargement de l'image."))
                 }
             }
         }
