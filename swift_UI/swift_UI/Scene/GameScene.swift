@@ -45,6 +45,9 @@ public class GameScene: SKScene {
         boardNode.resetCells()
         gameViewModel.resetGame()
         boardNode.initCells()
+        p1.isHidden = self.gameViewModel.getCurrPlayer != .player1
+        p2.isHidden = self.gameViewModel.getCurrPlayer != .player2  
+
     }
     
     public func onPlay(row:Int,col:Int) async -> Int {
