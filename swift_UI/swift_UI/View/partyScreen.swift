@@ -73,7 +73,11 @@ struct partyScreen: View {
                           .cornerRadius(8)
                       }
                     
-                    CustomButton(text: "Historique", destination: { Historique() } )
+                    CustomButton(text: "Historique",execute: {
+                        Task {
+                            await PersistanceVM.shared.loadResults()
+                        }
+                    }, destination: { Historique() } )
                 }
             }.foregroundStyle(.main).font(.custom("Short Baby", size: 16, relativeTo: .body))
             .onAppear {
@@ -82,11 +86,16 @@ struct partyScreen: View {
                      size: CGSize(width: 700, height: 700),
                      gameViewModel: game
                  )
-                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
                     if val > 0 {
                         val -= 1
                     } else {
                         gameScene!.displayEndMessage("Temps écoulé")
+                        t.invalidate()
+                    }
+                    if game.game.isOver {
+                        val = 0
+                        t.invalidate()
                     }
                  }
              }
